@@ -24,6 +24,6 @@ Es una versión del código en un momento determinado+, que representa los cambi
 ### 7. ¿Por qué es preferible realizar varios commits pequeños en lugar de un solo commit al final?
 Porque permite un control de los cambios. En el caso de que haya un error, es más sencillo identificar la causa y revertir únicamente el commit que lo contiene sin perder el resto del avance. Además, documenta claramente la evolución del código.
 
-#Reflexión 
+## Reflexión 
 
 A través de esta practica, nos pudimos dar cuenta que no existe una única forma para resolver problemas por medio del modelado de un programa, siempre hay maneras para mejorar y optimizar el desarrollo del proyecto, no hay una única forma para pensar y programar, tenemos que estar abiertos a aprender y mejorar. 
