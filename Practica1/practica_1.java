@@ -1,17 +1,34 @@
-import java.util.Arrays;
+public class practica_1 {
 
-public class Practica1{
-    private int k;
-    private String v; 
-    Arrays 
-    LinkedList cubetas = new LinkedList();
+    public static class TablaHash {
 
+        private static class Nodo {
+            private int key;
+            private String value;
+            private Nodo sig;
 
-    private int dispersion(k){
-        return k % 7;
+            public Nodo(int key, String value) {
+                this.key = key;
+                this.value = value;
+                this.sig = null;
+            }
+        }
 
-    }
-    private int factorCarga(){
+        private static final int M = 7; // esto esta pq en la practica dice que m es 7 jaja
+        private Nodo[] tabla;
+        private int n;
 
+        public TablaHash() {
+            tabla = new Nodo[M];
+            n = 0;
+        }
+
+        private int dispersion(int key) {
+            return key % M;
+        }
+
+        private int factorCarga(int m){
+            return n/m;
+        }
     }
 }
