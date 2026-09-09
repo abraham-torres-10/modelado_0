@@ -27,8 +27,42 @@ public class practica_1 {
             return key % M;
         }
 
-        private int factorCarga(int m){
-            return n/m;
+        public void insertar(int key, String value){
+            int a = dispersion(key);
+            Nodo actual = tabla[a];
+
+            while(actual != null){
+                if(actual.key == key){      //esto es eb caso de que tengan la misma llave simplemente actualiza el valor 
+                    actual.value = value;
+                return;
+                }
+                actual = actual.sig;
+            }
+            Nodo nuebo = new Nodo(key, value);
+            nuebo.sig = tabla[a];
+            tabla[a] = nuebo;
+            n++;
         }
+
+        public void imprimir(){
+            for (int i = 0; i < M; i++){
+                System.out.print(i + " -> ");
+                Nodo actual = tabla[i];
+                while(actual != null){              //Ya quedo imprimir y las demas te toca lo demas we
+                    System.out.print("(" + actual.key + "," + actual.value + ") -> ");
+                    actual = actual.sig;
+                }
+                System.out.println();
+            }
     }
+    }
+    public static void main(String[] args) {
+        TablaHash tabla = new TablaHash();
+
+        tabla.insertar(18, "Ana");
+        tabla.insertar(10, "Luis");
+        tabla.insertar(23, "Elena");
+        tabla.imprimir();
+    }
+    
 }
