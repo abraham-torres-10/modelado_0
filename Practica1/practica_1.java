@@ -44,6 +44,18 @@ public class practica_1 {
             n++;
         }
 
+          public String buscar(int key){
+            int a = dispersion(key);
+            Nodo actual = tabla[a];
+
+            while(actual != null){
+                if(actual.key == key)
+                 return actual.value;   //si esta 
+                actual.sig = actual;
+            }
+            return null; //no esta la llave
+            }
+
         public void imprimir(){
             for (int i = 0; i < M; i++){
                 System.out.print(i + " -> ");
@@ -54,15 +66,26 @@ public class practica_1 {
                 }
                 System.out.println();
             }
-    }
+        }   
     }
     public static void main(String[] args) {
         TablaHash tabla = new TablaHash();
-
+      
+        //Comprobar que se insertan correctamente los elementos
         tabla.insertar(18, "Ana");
         tabla.insertar(10, "Luis");
         tabla.insertar(23, "Elena");
         tabla.imprimir();
+
+        //Comprobamos una colision
+        tabla.insertar(24, "Maria");
+        tabla.insertar(31, "Carlos");
+        tabla.imprimir();
+
+        //Comprobamos que el metodo buscar funciona correctamente
+        tabla.buscar(18);
+        tabla.buscar(31);
+        tabla.buscar(100); //no esta
     }
     
 }
