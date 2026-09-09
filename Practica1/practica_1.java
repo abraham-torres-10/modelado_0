@@ -56,6 +56,28 @@ public class practica_1 {
             return null; //no esta la llave
             }
 
+        	  
+        public boolean eliminar(int key) {
+            int idx = dispersion(key);
+            Nodo actual = tabla[idx];
+            Nodo anterior = null;
+
+            while (actual != null) {
+            if (actual.key == key) {
+                if (anterior == null) {
+                tabla[idx] = actual.sig;
+            } else {
+                anterior.sig = actual.sig;
+            }
+            n--;
+            return true;
+                }
+                anterior = actual;
+                actual = actual.sig;
+            }
+            return false;
+        }
+
         public void imprimir(){
             for (int i = 0; i < M; i++){
                 System.out.print(i + " -> ");
@@ -86,6 +108,9 @@ public class practica_1 {
         tabla.buscar(18);
         tabla.buscar(31);
         tabla.buscar(100); //no esta
+
+        //Combrobar que el metodo eliminar funciona correctamente
+        tabla.eliminar(24);
     }
     
 }
