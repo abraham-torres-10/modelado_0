@@ -33,7 +33,7 @@ public class Nodo {
         }
         return i;
     }
-    
+
     /** Divide un nodo con 4 llaves, aqui sube la tercera, 
      * la izquierda queda con [k1, k2] y la derecha con [k4], 
      * si es interno entonces también reparte los hijos */
@@ -69,5 +69,18 @@ public class Nodo {
             this.derecho = derecho;
         }
     }
-
+    
+    // Aqui se observa el formato [10 | 20 | 40]
+    @Override
+    public String toString() {
+        StringBuilder texto = new StringBuilder("[");
+        for (int i = 0; i < claves.size(); i++) {
+            if (i > 0) {
+                texto.append(" | ");
+            }
+            texto.append(claves.get(i));
+        }
+        texto.append("]");
+        return texto.toString();
+    }
 }

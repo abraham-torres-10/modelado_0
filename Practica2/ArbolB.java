@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 public class ArbolB {
 
     private Nodo raiz;
@@ -64,5 +65,34 @@ public class ArbolB {
             }
         }
         return nodo.estaDesbordado() ? nodo.dividir() : null;
+    }
+
+    // imprimir por niveles, se hace recorrido con una cola
+    public String aTextoPorNiveles() {
+        if (raiz == null) {
+            return "(arbol vacio)";
+        }
+        StringBuilder texto = new StringBuilder();
+        LinkedList<Nodo> cola = new LinkedList<>();
+        cola.add(raiz);
+        int nivel = 0;
+        while (!cola.isEmpty()) {
+            int nodosEnNivel = cola.size();
+            if (nivel > 0) {
+                texto.append("\n");
+            }
+            texto.append("Nivel ").append(nivel).append(":");
+            for (int k = 0; k < nodosEnNivel; k++) {
+                Nodo nodo = cola.remove();
+                texto.append(" ").append(nodo);
+                cola.addAll(nodo.hijos);
+            }
+            nivel++;
+        }
+        return texto.toString();
+    }
+
+    public void imprimirPorNiveles() {
+        System.out.println(aTextoPorNiveles());
     }
 }

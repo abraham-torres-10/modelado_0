@@ -3,16 +3,15 @@ public class Main {
     public static void main(String[] args) {
         ArbolB arbol = new ArbolB();
 
-        System.out.println(arbol.estaVacio());
-        System.out.println(arbol.buscar(10));
+        int[] llaves = {20, 40, 10, 30, 50, 60, 70, 5, 15, 25, 35, 45};
 
-        arbol.insertar(20);
-        arbol.insertar(40);
-        arbol.insertar(10);
-        arbol.insertar(30);
+        for (int llave : llaves) {
+            arbol.insertar(llave);
+        }
 
-        System.out.println(arbol.buscar(20));
-        System.out.println(arbol.buscar(30));
+        arbol.imprimirPorNiveles();
+
+        System.out.println(arbol.buscar(35));
         System.out.println(arbol.buscar(99));
     }
 }
