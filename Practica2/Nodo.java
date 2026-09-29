@@ -24,6 +24,16 @@ public class Nodo {
         return claves.size() > MAX_CLAVES;
     }
 
+    // Tiene menos llaves de las permitidas
+    public boolean estaSubocupado() {
+        return claves.size() < MIN_CLAVES;
+    }
+
+    // Puede prestar una llave sin quedar subocupado
+    public boolean puedePrestar() {
+        return claves.size() > MIN_CLAVES;
+    }
+
     /**  Primera posición i con x <= claves[i], si no hay entonces cantidadClaves()
      * Sirve para buscar la llave o para elegir el hijo por el que bajar */
     public int indiceDe(int x) {
@@ -69,7 +79,7 @@ public class Nodo {
             this.derecho = derecho;
         }
     }
-    
+
     // Aqui se observa el formato [10 | 20 | 40]
     @Override
     public String toString() {

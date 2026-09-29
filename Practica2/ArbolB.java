@@ -67,6 +67,113 @@ public class ArbolB {
         return nodo.estaDesbordado() ? nodo.dividir() : null;
     }
 
+    //  Aquí se borra y después se revisa si algún nodo quedó vacío
+    public boolean eliminar(int x) {
+        if (!buscar(x)) {
+            return false;
+        }
+        eliminarEn(raiz, x);
+        if (raiz.cantidadClaves() == 0) {                     // caso especial de la raíz
+            raiz = raiz.esHoja() ? null : raiz.hijos.get(0);  // la altura baja en uno
+        }
+        return true;
+    }
+
+    private void eliminarEn(Nodo nodo, int x) {
+        int i = nodo.indiceDe(x);
+
+        if (nodo.esHoja()) {                                  // caso basico, borrar de la hoja
+            nodo.claves.remove(i);
+            return;
+        }
+
+        boolean estaAqui = i < nodo.cantidadClaves() && nodo.claves.get(i) == x;
+        int hijoARevisar = i;
+        if (!estaAqui) {
+            eliminarEn(nodo.hijos.get(i), x);
+        } else {
+            Nodo izquierdo = nodo.hijos.get(i);
+            Nodo derecho = nodo.hijos.get(i + 1);
+            if (izquierdo.puedePrestar()) {
+                int predecesor = maximo(izquierdo);
+                nodo.claves.set(i, predecesor);
+                eliminarEn(izquierdo, predecesor);
+            } else if (derecho.puedePrestar()) {
+                int sucesor = minimo(derecho);
+                nodo.claves.set(i, sucesor);
+                eliminarEn(derecho, sucesor);
+                hijoARevisar = i + 1;
+            } else {
+                fusionar(nodo, i);
+                eliminarEn(nodo.hijos.get(i), x);
+            }
+        }
+        if (nodo.hijos.get(hijoARevisar).estaSubocupado()) {
+            repararSubocupacion(nodo, hijoARevisar);
+        }
+    }
+
+    // Arregla un hijo que se quedó sin llaves, se deberá redistribuir o fusionar
+    private void repararSubocupacion(Nodo padre, int i) {
+        boolean hayIzquierdo = i > 0;
+        boolean hayDerecho = i < padre.hijos.size() - 1;
+        if (hayIzquierdo && padre.hijos.get(i - 1).puedePrestar()) {
+            redistribuirDesdeIzquierdo(padre, i);
+        } else if (hayDerecho && padre.hijos.get(i + 1).puedePrestar()) {
+            redistribuirDesdeDerecho(padre, i);
+        } else if (hayIzquierdo) {
+            fusionar(padre, i - 1);
+        } else {
+            fusionar(padre, i);
+        }
+    }
+
+    // La llave pasa por el padre: hermano, padre, nodo vacío
+    private void redistribuirDesdeIzquierdo(Nodo padre, int i) {
+        Nodo hijo = padre.hijos.get(i);
+        Nodo hermano = padre.hijos.get(i - 1);
+        hijo.claves.add(0, padre.claves.get(i - 1));                          // baja el separador
+        padre.claves.set(i - 1, hermano.claves.remove(hermano.claves.size() - 1)); // sube la del hermano
+
+        if (!hermano.esHoja()) {                                              // mover también el hijo
+            hijo.hijos.add(0, hermano.hijos.remove(hermano.hijos.size() - 1));
+        }
+    }
+
+    private void redistribuirDesdeDerecho(Nodo padre, int i) {
+        Nodo hijo = padre.hijos.get(i);
+        Nodo hermano = padre.hijos.get(i + 1);
+        hijo.claves.add(padre.claves.get(i));                                 // baja el separador
+        padre.claves.set(i, hermano.claves.remove(0));                        // sube la del hermano
+        if (!hermano.esHoja()) {
+            hijo.hijos.add(hermano.hijos.remove(0));
+        }
+    }
+
+    // Une hijo[j] + llave separadora del padre + hijo[j+1] en un solo nodo
+    private void fusionar(Nodo padre, int j) {
+        Nodo izquierdo = padre.hijos.get(j);
+        Nodo derecho = padre.hijos.get(j + 1);
+        izquierdo.claves.add(padre.claves.remove(j));
+        izquierdo.claves.addAll(derecho.claves);
+        izquierdo.hijos.addAll(derecho.hijos);
+        padre.hijos.remove(j + 1);
+    }
+
+    private int maximo(Nodo nodo) {                           // mayor llave del subárbol
+        while (!nodo.esHoja()) {
+            nodo = nodo.hijos.get(nodo.hijos.size() - 1);
+        }
+        return nodo.claves.get(nodo.claves.size() - 1);
+    }
+
+    private int minimo(Nodo nodo) {                           // menor llave del subárbol
+        while (!nodo.esHoja()) {
+            nodo = nodo.hijos.get(0);
+        }
+        return nodo.claves.get(0);
+    }
+
     // imprimir por niveles, se hace recorrido con una cola
     public String aTextoPorNiveles() {
         if (raiz == null) {

@@ -13,5 +13,13 @@ public class Main {
 
         System.out.println(arbol.buscar(35));
         System.out.println(arbol.buscar(99));
+
+        arbol.eliminar(25);
+        arbol.eliminar(10);
+        arbol.eliminar(70);
+        arbol.eliminar(5);
+
+        System.out.println();
+        arbol.imprimirPorNiveles();
     }
 }
