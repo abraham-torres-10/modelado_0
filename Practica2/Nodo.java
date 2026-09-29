@@ -23,4 +23,14 @@ public class Nodo {
     public boolean estaDesbordado() {
         return claves.size() > MAX_CLAVES;
     }
+
+    /**  Primera posición i con x <= claves[i], si no hay entonces cantidadClaves()
+     * Sirve para buscar la llave o para elegir el hijo por el que bajar */
+    public int indiceDe(int x) {
+        int i = 0;
+        while (i < claves.size() && x > claves.get(i)) {
+            i++;
+        }
+        return i;
+    }
 }
