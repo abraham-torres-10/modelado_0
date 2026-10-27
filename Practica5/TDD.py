@@ -2,5 +2,5 @@
 Primer commit, va a ser la funcion sin ningun tipo de comportamiento"""
 
 def calcular_envio(peso,tipo):
-
+    return 50
     raise NotImplementedError
