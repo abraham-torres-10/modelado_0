@@ -1,3 +1,5 @@
+import pytest 
+
 from TDD import calcular_envio
 def test_envio_estandar():
     assert calcular_envio(3,"estandar")== 50
@@ -16,3 +18,11 @@ def test_envio_express_3kg():
 
 def test_envio_express_7kg():
     assert calcular_envio(7, "express") == 140
+
+def test_envio_express_peso_cero():
+    with pytest.raises(ValueError):
+        calcular_envio(0, "express")
+
+def test_envio_express_peso_negativo():
+    with pytest.raises(ValueError):
+        calcular_envio(-2, "express")
