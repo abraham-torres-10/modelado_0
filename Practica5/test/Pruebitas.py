@@ -10,3 +10,9 @@ def test_envio_estandar_exacto():
 
 def test_envio_estandar_paquete_pesado_7kg():
     assert calcular_envio(7, "estandar") == 70
+
+def test_envio_express_3kg():
+    assert calcular_envio(3, "express") == 100
+
+def test_envio_express_7kg():
+    assert calcular_envio(7, "express") == 140
